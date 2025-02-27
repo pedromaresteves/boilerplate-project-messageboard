@@ -7,8 +7,10 @@ module.exports = function (app) {
   app.route('/api/threads/:board').get((req, res, next) => {
     return threadController.getThreadsByBoard(req, res, next);
   }).post((req, res, next) => {
-    return threadController.createThread(req, res, next);
-  });
+    return threadController.createThread(req, res, next)
+  }).delete((req, res, next) => {
+    return threadController.deleteThreadData(req, res, next)
+  });;
 
   app.route('/api/replies/:board').post((req, res, next) => {
     return repliesController.addReply(req, res, next);

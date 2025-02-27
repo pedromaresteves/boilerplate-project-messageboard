@@ -13,12 +13,18 @@ const createThread = async (threadData) => {
 
 const getBoard = async (board) => {
     const db = await msgBoardDatabase;
-    return await db.collection("threads").find({ board: board }).sort({ bumped_on: -1 }).toArray();
+    return await db.collection("threads").find({ board: board }, { replies: { $slice: -3 } }).sort({ bumped_on: -1 }).toArray();
 };
 
 const getThreadById = async (threadId) => {
     const db = await msgBoardDatabase;
     return await db.collection("threads").findOne({ _id: ObjectId.createFromHexString(threadId) });
+};
+
+const deleteThreadById = async (deleteData) => {
+    const { thread_id, delete_password } = deleteData;
+    const db = await msgBoardDatabase;
+    return await db.collection("threads").deleteOne({ _id: ObjectId.createFromHexString(thread_id), delete_password: delete_password });
 };
 
 const addReply = async (replyData) => {
@@ -33,4 +39,4 @@ const addReply = async (replyData) => {
     return await db.collection("threads").updateOne(query, update);
 };
 
-module.exports = { createThread, getBoard, addReply, getThreadById }
+module.exports = { createThread, getBoard, addReply, getThreadById, deleteThreadById }
