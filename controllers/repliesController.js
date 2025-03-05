@@ -9,5 +9,10 @@ module.exports = {
     getFullThread: async (req, res) => {
         const thread = await databaseQueries.getThreadById(req.query.thread_id);
         return res.send(thread)
-    }
+    },
+    deleteReply: async (req, res) => {
+        const databaseDeleteFeedback = await databaseQueries.deleteReplyById(req.body)
+        const msgToClient = databaseDeleteFeedback.deletedCount ? "success" : "incorrect password"
+        return res.send(msgToClient)
+    },
 }
