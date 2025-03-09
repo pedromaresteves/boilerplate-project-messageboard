@@ -11,7 +11,7 @@ const createThread = async (threadData) => {
 
 const getBoard = async (board) => {
     const db = await msgBoardDatabase;
-    const threads = await db.collection("threads").find({ board: board }).sort({ bumped_on: -1 }).toArray();
+    const threads = await db.collection("threads").find({ board: board }, { limit: 10 }).sort({ bumped_on: -1 }).toArray();
     const threadsWithReplies = await Promise.all(threads.map(async thread => {
         const threadReplies = await db.collection("replies").find({ thread_id: thread._id }, { replies: { $slice: -3 } }).toArray();
         thread.replies = threadReplies;

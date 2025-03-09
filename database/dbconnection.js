@@ -9,13 +9,13 @@ const client = new MongoClient(uri, {
     }
 });
 
-async function run() {
+async function run(db = "msg_board") {
     if (msgBoardDb) {
         return msgBoardDb;
     }
     try {
         await client.connect();
-        msgBoardDb = await client.db("msg_board")
+        msgBoardDb = await client.db(db)
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
         return msgBoardDb;
     } catch (error) {
