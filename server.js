@@ -13,7 +13,7 @@ const app = express();
 
 app.use(helmet({
   referrerPolicy: {
-    policy: ["origin", "unsafe-url"],
+    policy: ["origin"],
   },
 }));
 
