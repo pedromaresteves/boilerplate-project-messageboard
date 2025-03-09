@@ -15,7 +15,7 @@ app.use(helmet({
   referrerPolicy: {
     policy: ["origin", "unsafe-url"],
   },
-}),);
+}));
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
