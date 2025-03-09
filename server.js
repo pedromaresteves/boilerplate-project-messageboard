@@ -12,10 +12,9 @@ const runner = require('./test-runner');
 const app = express();
 
 app.use(helmet({
-  referrerPolicy: {
-    policy: ["origin"],
-  },
-}));
+  referrerPolicy: false,
+})
+);
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
