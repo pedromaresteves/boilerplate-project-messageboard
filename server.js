@@ -12,7 +12,9 @@ const runner = require('./test-runner');
 const app = express();
 
 app.use(helmet({
-  referrerPolicy: false,
+  referrerPolicy: {
+    policy: "same-origin",
+  },
 })
 );
 
