@@ -8,7 +8,7 @@ module.exports = function (app) {
     return threadController.getThreadsByBoard(req, res, next);
   }).post((req, res, next) => {
     return threadController.createThread(req, res, next)
-  }).delete((req, res, next) => {
+  }).put((req,res,next) => threadController.reportThread(req,res,next)).delete((req, res, next) => {
     return threadController.deleteThreadData(req, res, next)
   });
 
@@ -16,7 +16,7 @@ module.exports = function (app) {
     return repliesController.getFullThread(req, res, next);
   }).post((req, res, next) => {
     return repliesController.addReply(req, res, next);
-  }).delete((req, res, next) => {
+  }).put((req, res, next) => repliesController.reportReply(req,res,next)).delete((req, res, next) => {
     return repliesController.deleteReply(req, res, next)
   });;
 

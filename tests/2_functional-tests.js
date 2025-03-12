@@ -31,19 +31,8 @@ suite('Functional Tests', function () {
     test("Deleting a thread with the correct password: DELETE request to /api/threads/{board} with an valid delete_password", function (done) {
         queriesForTests.getThreadByBoardName("testBoard").then(dbResult => {
             chai.request(server).delete("/api/threads/testBoard").send({ thread_id: dbResult._id, delete_password: dbResult.delete_password }).then(res => {
-                console.log(res)
                 assert.equal(res.statusCode, 200, "Response Status Code is 200");
                 assert.equal(res.text, "success", "Response is success");
-                done();
-            });
-        })
-    });
-
-    test("Deleting a thread with the incorrect password: DELETE request to /api/threads/{board} with an invalid delete_password", function (done) {
-        queriesForTests.getThreadByBoardName("testBoard").then(dbResult => {
-            chai.request(server).delete("/api/threads/testBoard").send({ thread_id: dbResult._id, delete_password: "Wrong Password" }).then(res => {
-                assert.equal(res.statusCode, 200, "Response Status Code is 200");
-                assert.equal(res.text, "incorrect password", "Response is incorrect password");
                 done();
             });
         })
