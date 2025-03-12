@@ -42,17 +42,11 @@ const deleteThreadById = async (deleteData) => {
     return await db.collection("threads").deleteOne({ _id: ObjectId.createFromHexString(thread_id), delete_password: delete_password });
 };
 
-const addReply = async (replyData) => {
+const addReply = async (reqBody, replyData) => {
     const db = await msgBoardDatabase;
-    const replyInfo = {
-        _id: new ObjectId(),
-        thread_id: ObjectId.createFromHexString(replyData.thread_id),
-        created_on: new Date(),
-        text: replyData.text,
-        delete_password: replyData.delete_password,
-        reported: false
-    }   
-    const replyToDB = await db.collection("threads").updateOne({_id: replyInfo.thread_id}, {$push: {replies: replyInfo}, $set: {bumped_on: new Date()}})
+    replyData._id = new ObjectId();
+    replyData.thread_id = ObjectId.createFromHexString(reqBody.thread_id);
+    const replyToDB = await db.collection("threads").updateOne({_id: replyData.thread_id}, {$push: {replies: replyData}, $set: {bumped_on: new Date()}})
     return replyToDB;
 };
 
